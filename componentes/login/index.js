@@ -7,17 +7,48 @@ import imagemLogo from "../../public/imagens/logo.svg";
 import { useState } from "react";
 import Link from "next/link";
 import {validarEmail, validarSenha} from "../../utils/validadores"
+import UsuarioService from "../../services/UsuarioService";
+
+const usuarioService = new UsuarioService();
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [estaSubmetendo, setEstaSubmetendo] = useState(false);
 
     const validarFormulario = () => {
         return (
             validarEmail(email)
-            && validarSenha
-        )
+            && validarSenha(senha)
+        );
     }
+
+    const aoSubmeter = async (e) => {
+        e.preventDefault();
+        if(!validarFormulario()){
+            return;
+        }
+
+        setEstaSubmetendo(true);
+
+        try {
+            await usuarioService.login({
+                login: email,
+                senha: senha
+            });
+
+            //TODO: redirecionar o usuario para Home
+        } catch (error) {
+            alert(
+                "Erro ao realizar o login" + error?.response?.data?.erro
+            );
+        }
+
+
+        setEstaSubmetendo(false);
+
+    }
+
 
     return (
         <section className={`paginaLogin paginaPublica`}>
@@ -31,7 +62,7 @@ export default function Login() {
             </div>
 
             <div className="conteudoPaginaPublica">
-                <form>
+                <form onSubmit={aoSubmeter}>
                    <InputPublico
                         imagem={imagemEnvelope}
                         texto="E-mail"
@@ -54,7 +85,7 @@ export default function Login() {
                     <Botao
                         texto="Login"
                         tipo="submit"
-                        desabilitado={!validarFormulario()}
+                        desabilitado={!validarFormulario() || estaSubmetendo}
                     />
                 </form>
 

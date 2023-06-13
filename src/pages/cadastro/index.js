@@ -10,6 +10,9 @@ import InputPublico from "../../../componentes/inputPublico";
 import UploadImagem from "../../../componentes/uploadImagem";
 import { useState } from "react";
 import {validarConfirmacaoSenha, validarEmail, validarNome, validarSenha} from '../../../utils/validadores'
+import UsuarioService from "../../../services/UsuarioService";
+
+const usuarioService = new UsuarioService();
 
 
 export default function Cadastro() {
@@ -18,6 +21,47 @@ export default function Cadastro() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [confirmacaoSenha, setConfirmacaoSenha] = useState("")
+    const [estaSubmetendo, setEstaSubmetendo] = useState(false);
+
+    const validarFormulario = () => {
+        return (
+            validarNome(nome)
+            &&validarEmail(email)
+            && validarSenha(senha)
+            &&validarConfirmacaoSenha(senha, confirmacaoSenha)
+        );
+    }
+
+    const aoSubmeter = async (e) => {
+        e.preventDefault();
+        if (!validarFormulario()) {
+            return;
+        }
+
+        setEstaSubmetendo(true);
+
+
+        try {
+            const corpoReqCadastro = new FormData();
+            corpoReqCadastro.append("nome", nome);
+            corpoReqCadastro.append("email", email);
+            corpoReqCadastro.append("senha", senha);
+
+            if (imagem?.arquivo) {
+                corpoReqCadastro.append("file", imagem.arquivo);
+            }
+
+            await usuarioService.cadastro(corpoReqCadastro);UploadImagem
+            alert("Sucesso!");
+            //Todo: autenticar o usuario diretamente apos o cadastro
+        } catch (error) {
+            alert(
+                "Erro ao cadastrar usuario." + error?.response?.data?.erro
+            )
+        }
+
+        setEstaSubmetendo(false);
+    }
 
     return (
         <section className={`paginaCadastro paginaPublica`}>
@@ -31,7 +75,7 @@ export default function Cadastro() {
             </div>
 
             <div className="conteudoPaginaPublica">
-                <form>
+                <form onSubmit={aoSubmeter}>
                  <UploadImagem
                     imagemPreviewClassName="avatar avatarPreview"
                     imagemPreview={imagem?.preview || imagemAvatar.src}
@@ -76,7 +120,7 @@ export default function Cadastro() {
                     <Botao
                         texto="Cadastrar"
                         tipo="submit"
-                        desabilitado={false}
+                        desabilitado={!validarFormulario() || estaSubmetendo}
                     />
                     </form>
                     <div className="rodapePaginaPublica">
