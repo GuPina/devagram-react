@@ -11,6 +11,7 @@ import UploadImagem from "../../../componentes/uploadImagem";
 import { useState } from "react";
 import {validarConfirmacaoSenha, validarEmail, validarNome, validarSenha} from '../../../utils/validadores'
 import UsuarioService from "../../../services/UsuarioService";
+import { useRouter } from "next/router";
 
 const usuarioService = new UsuarioService();
 
@@ -22,6 +23,7 @@ export default function Cadastro() {
     const [senha, setSenha] = useState("")
     const [confirmacaoSenha, setConfirmacaoSenha] = useState("")
     const [estaSubmetendo, setEstaSubmetendo] = useState(false);
+    const router = useRouter();
 
     const validarFormulario = () => {
         return (
@@ -52,8 +54,12 @@ export default function Cadastro() {
             }
 
             await usuarioService.cadastro(corpoReqCadastro);UploadImagem
-            alert("Sucesso!");
-            //Todo: autenticar o usuario diretamente apos o cadastro
+           await usuarioService.login({
+                login: email,
+                senha
+           })
+            
+            router.push('/');
         } catch (error) {
             alert(
                 "Erro ao cadastrar usuario." + error?.response?.data?.erro
