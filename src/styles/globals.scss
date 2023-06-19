@@ -1,6 +1,6 @@
 @import 'variaveis.scss';
 
-*{
+* {
   font-family: $fontRegular;
   font-size: 14px;
 }
@@ -10,34 +10,34 @@ html, body, #__next {
   margin: 0;
 }
 
-.avatar{
+.avatar {
   border-radius: 50%;
   object-fit: cover;
 }
 
-.oculto{
-  display: none;
+.oculto {
+  display: none !important;
 }
 
-input{
+input {
   &::placeholder {
-    /*chrome, opera, safari e firefox*/
+    /* chrome, opera, safari e firefox */
     color: $cinza2;
     opacity: 1;
   }
 
   &:-ms-input-placeholder {
-    /*internet Explorer 10 ao 11*/
-    color: $cinza2
+    /*ie 10-11*/
+    color: $cinza2;
   }
 
   &::-ms-input-placeholder {
-    color: $cinza2
+    color: $cinza2;
   }
 }
 
 .desktop {
-    display: block;
+  display: block;
 
   @media screen and (max-width: calc($desktopBreakpoint - 1px)) {
     display: none;
@@ -45,9 +45,9 @@ input{
 }
 
 .mobile {
-    display: block;
+  display: block;
 
-  @media screen and (max-width: calc($desktopBreakpoint - 1px)) {
+  @media screen and (min-width: $desktopBreakpoint) {
     display: none;
   }
 }
@@ -61,7 +61,7 @@ input{
 }
 
 .barraNavegacao {
-  ul{
+  ul {
     display: flex;
     justify-content: space-around;
     padding: 0;
