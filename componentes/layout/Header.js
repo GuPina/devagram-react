@@ -43,7 +43,6 @@ export default function Header() {
 
     }
 
-
     const aoClicarResultadoPesquisa = (id) => {
         console.log('aoClicarResultadoPesquisa', {id});
 
@@ -84,7 +83,7 @@ export default function Header() {
                     {resultadoPesquisa.map(r => (
                         <ResultadoPesquisa 
                             avatar={r.avatar}
-                            name={r.nome}
+                            nome={r.nome}
                             email={r.email}
                             key={r._id}
                             id={r._id}

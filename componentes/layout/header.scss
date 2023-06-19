@@ -5,7 +5,6 @@
         display: flex;
         padding: 8px 16px;
 
-
         .logoCabecalhoPrincipal {
             position: relative;
             width: 140px;
@@ -18,7 +17,6 @@
             margin-left: 16px;
             display: flex;
             align-items: center;
-
 
             .containerImagemLupa {
                 position: absolute;
@@ -44,13 +42,13 @@
         }
     }
 
-    .resultadoPesquisaContainer{
+    .resultadoPesquisaContainer {
         position: absolute;
         background-color: $branco;
         width: 100%;
         z-index: 9;
 
-        .resultadoPesquisa{
+        .resultadoPesquisa {
             display: flex;
             padding: 10px 16px;
 
@@ -58,7 +56,7 @@
                 background-color: $cinza;
             }
 
-            .avatar{
+            .avatar {
                 height: 32px;
                 width: 32px;
                 margin-right: 8px;
@@ -77,6 +75,7 @@
     @media screen and (min-width: $desktopBreakpoint) {
         background-color: $branco;
         border: none;
+        margin-bottom: 30px;
 
         .conteudoCabecalhoPrincipal {
             max-width: 60%;
@@ -86,12 +85,12 @@
 
             .logoCabecalhoPrincipal {
                 width: 200px;
-                height: 30px;
+                cursor: pointer;
             }
 
             .barraPesquisa {
                 flex: 0.5;
-                margin: 0px 5px 0px 20px;
+                margin: 0px 5px 0px 30px;
 
                 input {
                     width: 100%;
@@ -101,14 +100,14 @@
             .barraNavegacao {
                 ul {
                     li {
-                        margin: 0px 0px 0px 16px;
+                        margin: 0px 0px 0px 20px;
                     }
                 }
             }
         }
 
         .resultadoPesquisaContainer {
-            width: 20%;
+            width: 25%;
             margin: auto;
             cursor: pointer;
             right: 0;
