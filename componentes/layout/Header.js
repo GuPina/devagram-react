@@ -27,7 +27,8 @@ export default function Header() {
            const { data } = await usuarioService.pesquisar(termoPesquisado);
            setResultadoPesquisa(data);
         } catch (error) {
-            alert('Erro ao pesquisar usuario' + error?.respose?.data?.erro);
+            console.log('Erro ao pesquisar usuário:', error);
+            alert('Erro ao pesquisar usuario' + error?.response?.data?.erro);
         }
     }
 
@@ -38,11 +39,16 @@ export default function Header() {
 
     }
 
+    const redirecionarParaHome = () => {
+        router.push('/');
+    }
+
     return (
         <header className='cabecalhoPrincipal'>
             <div className='conteudoCabecalhoPrincipal'>
                 <div className='logoCabecalhoPrincipal'>
-                    <Image 
+                    <Image
+                        onClick={redirecionarParaHome} 
                         src={logoHorizontal}
                         alt='logo devagram'
                         layout='fill'

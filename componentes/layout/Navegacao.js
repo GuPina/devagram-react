@@ -48,34 +48,47 @@ export default function Navegacao({className}) {
         }else {
             setRotaAtiva(chavesDoMapaDeRotas[indiceAtivo]);
         }
-        console.log({chavesDoMapaDeRotas});
-
     }
+
+    const obterImagem = (nomeRota) => {
+        const rotaAtivada = mapaDeRotas[nomeRota];
+
+        if(rotaAtiva === nomeRota) {
+            return rotaAtivada.imagemAtivo;
+        }
+
+        return rotaAtivada.imagemPadrao;
+    }
+
+    const aoClicarNoIcone = (nomeRota) =>{
+        setRotaAtiva(nomeRota);
+        router.push(mapaDeRotas[nomeRota].rodasAtivacao[0])
+    } 
 
     return (
         <nav className={`barraNavegacao ${className}`}>
             <ul>
-                <li>
+                <li onClick={() => aoClicarNoIcone('home')}>
                     <Image 
-                        src={imgHomeAtivo}
+                        src={obterImagem('home')}
                         alt='icone home'
                         width={20}
                         height={20}
                     />
                 </li>
                     
-                <li>
+                <li onClick={() => aoClicarNoIcone('publicacao')}>
                     <Image 
-                        src={imgPublicacaoCinza}
+                        src={obterImagem('publicacao')}
                         alt='icone publicacao'
                         width={20}
                         height={20}
                     />
                 </li>
                
-                <li>
+                <li onClick={() => aoClicarNoIcone('perfil')}>
                     <Image 
-                        src={imgUsuarioCinza}
+                        src={obterImagem('perfil')}
                         alt='icone publicacao'
                         width={20}
                         height={20}
