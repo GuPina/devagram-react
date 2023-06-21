@@ -1,15 +1,20 @@
-import Image from "next/image"
-import logoHorizontal from "../../public/imagens/logoHorizontal.svg"
-import imagemLupa from "../../public/imagens/lupa.svg"
-import Navegacao from "./Navegacao"
-import { useState } from "react"
-import ResultadoPesquisa from "./ResultadoPesquisa"
+import Image from "next/image";
+import logoHorizontal from "../../public/imagens/logoHorizontal.svg";
+import imagemLupa from "../../public/imagens/lupa.svg";
+import Navegacao from "./Navegacao";
+import { useState } from "react";
+import ResultadoPesquisa from "./ResultadoPesquisa";
+import UsuarioService from '../../services/UsuarioService';
+import { useRouter } from "next/router";
+
+const usuarioService = new UsuarioService();
 
 export default function Header() {
     const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
-    const [termoPesquisado, setTermoPesquisado] = useState([]);
+    const [termoPesquisado, setTermoPesquisado] = useState('');
+    const router = useRouter()
 
-    const aoPesquisar = (e) => {
+    const aoPesquisar = async (e) => {
       setTermoPesquisado(e.target.value);
       setResultadoPesquisa([]);
       
@@ -17,34 +22,19 @@ export default function Header() {
         if (termoPesquisado.length < 3) {
             return;
         }
-        {
-        setResultadoPesquisa([ 
-            {
-                avatar: '',
-                nome: 'Gustavo',
-                email: 'gustavo@devagram.com',
-                _id: '12345'
-            },
-            {
-                avatar: '',
-                nome: 'adastoufo',
-                email: 'adastoufo@devagram.com',
-                _id: '123456'
-            },
-            {
-                avatar: '',
-                nome: 'astoufinho',
-                email: 'astoufinho@devagram.com',
-                _id: '1234567'
-            }
-        ])
 
-    }
-
+        try {
+           const { data } = await usuarioService.pesquisar(termoPesquisado);
+           setResultadoPesquisa(data);
+        } catch (error) {
+            alert('Erro ao pesquisar usuario' + error?.respose?.data?.erro);
+        }
     }
 
     const aoClicarResultadoPesquisa = (id) => {
-        console.log('aoClicarResultadoPesquisa', {id});
+        setResultadoPesquisa([]);
+        setTermoPesquisado('');
+        router.push(`/perfil/${id}`);
 
     }
 
