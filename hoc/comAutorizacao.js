@@ -15,12 +15,14 @@ export default function comAutorizacao(Componente) {
                 return null;
             }
 
+            const usuarioLogado = usuarioService.obterInformacoesDoUsuarioLogado();
+
             return (
                 <>
                     
-                    <Header />
-                    <Componente {...props} />
-                    <Rodape />
+                    <Header usuarioLogado={usuarioLogado} />
+                    <Componente usuarioLogado={usuarioLogado} {...props} />
+                    <Rodape usuarioLogado={usuarioLogado} />
                 </>
             ) 
         }
