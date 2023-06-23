@@ -15,16 +15,16 @@ export function Feed({ usuarioLogado }) {
             avatar: null
           },
           fotoDoPost: 'https://i.pinimg.com/564x/4c/38/71/4c387112a8b8d749c81422aabe5bf563.jpg',
-          descricao: 'Ultimo heroi da terra',
+          descricao: 'Ultimo heroi da terra no final dos tempos sempre haverá xandão vamos juntos lado a lado sempre naquela pegada dos campeões',
           curtidas: [],
           comentarios: [
             {
               nome: 'Fulano',
-              mensagem: 'Já foi assaltado? claro que não!'
+              mensagem: 'Aqui é Xandão, sem pressão, pra cima dos glob glob naquele pique irmao sempre lado a lado com o criador até o final dos tempos e pode esperar que no topo da montanha terá Xandão'
             },
             {
                 nome: 'Super Xandão',
-                mensagem: 'Aqui é Xandão, sem pressão'
+                mensagem: 'Aqui é Xandão, sem pressão, pra cima dos glob glob naquele pique irmao sempre lado a lado com o criador até o final dos tempos e pode esperar que no topo da montanha terá Xandão'
               }
           ]
         }
@@ -32,15 +32,14 @@ export function Feed({ usuarioLogado }) {
     }, [usuarioLogado]);
   
     return (
-      <div className="feedContainer">
+      <div className="feedContainer largura30pctDesktop" >
         {listaDePostagens.map(dadosPostagem => (
-          <Postagem key={dadosPostagem.id} {...dadosPostagem} />
+          <Postagem 
+            key={dadosPostagem.id} 
+            {...dadosPostagem}
+            usuarioLogado={usuarioLogado}           
+          />
         ))}
       </div>
     );
   }
-  
-  
-  
-  
-  
