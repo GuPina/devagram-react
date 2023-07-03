@@ -1,34 +1,36 @@
 import { useEffect, useState } from "react";
 import Postagem from "./Postagem";
+import FeedService from "../../services/FeedService";
 
-export function Feed({ usuarioLogado }) {
+
+const feedService = new FeedService();
+
+export default function Feed({ usuarioLogado }) {
     const [listaDePostagens, setListaDePostagens] = useState([]);
-  
-    useEffect(() => {
-      console.log('carregar o feed');
-      setListaDePostagens([
+
+    useEffect(() => 
+      async () => {
+      const { data } = await feedService.carregarPostagens();
+
+      const postagensFormatadas = data.map((postagem) =>(
         {
-          id: '1',
+          id: postagem._id,
           usuario: {
-            id: '1',
-            nome: 'Gustavo',
-            avatar: null
+            id: postagem.userId,
+            nome: postagem.usuario.nome,
+            avatar: postagem.usuario.avatar
           },
-          fotoDoPost: 'https://i.pinimg.com/564x/4c/38/71/4c387112a8b8d749c81422aabe5bf563.jpg',
-          descricao: 'Ultimo heroi da terra no final dos tempos sempre haverá xandão vamos juntos lado a lado sempre naquela pegada dos campeões',
-          curtidas: [],
-          comentarios: [
-            {
-              nome: 'Fulano',
-              mensagem: 'Aqui é Xandão, sem pressão, pra cima dos glob glob naquele pique irmao sempre lado a lado com o criador até o final dos tempos e pode esperar que no topo da montanha terá Xandão'
-            },
-            {
-                nome: 'Super Xandão',
-                mensagem: 'Aqui é Xandão, sem pressão, pra cima dos glob glob naquele pique irmao sempre lado a lado com o criador até o final dos tempos e pode esperar que no topo da montanha terá Xandão'
-              }
-          ]
+          fotoDoPost: postagem.foto,
+          descricao: postagem.descricao,
+          curtidas: postagem.likes,
+          comentarios: postagem.comentarios.map(c => ({
+            nome: c.nome,
+            mensagem: c.comentario
+          }))
         }
-      ]);
+      ));
+      
+      setListaDePostagens(postagensFormatadas);
     }, [usuarioLogado]);
   
     return (
