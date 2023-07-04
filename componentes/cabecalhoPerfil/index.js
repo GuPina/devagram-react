@@ -39,6 +39,22 @@ export default function CabecalhoPerfil({
         return 'Seguir';
     }
 
+    const obterCorDoBotaoSeguir = () => {
+        if (estaSegunidoOUsuario) {
+            return 'invertido';
+        }
+
+        return 'primaria'
+    }
+
+    const manipularCliqueBotaoSeguir = async () => {
+        try {
+            await usuarioService.alternarSeguir(usuario._id)
+        }catch (error) {
+            alert(`Erro ao seguir/deixar de seguir!`);
+        }
+    }
+
     const obterCorDoBotaoPrincipal = () => {
         if (estaSeguindoOUsuario || estaNoPerfilPessoal) {
             return 'invertido';
