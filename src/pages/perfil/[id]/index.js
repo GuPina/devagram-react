@@ -3,31 +3,57 @@ import Feed from '../../../../componentes/feed';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CabecalhoPerfil from '../../../../componentes/cabecalhoPerfil';
+import UsuarioService from '../../../../services/UsuarioService';
+
+
+const usuarioService = new UsuarioService();
 
 function Perfil({ usuarioLogado }) {
-    const [usuario, setUsuario] = useState({});
-    const router = useRouter();
+  const [usuario, setUsuario] = useState({});
+  const router = useRouter();
 
+  const obterPerfil = async (idUsuario) => {
+    try {
+      const { data } = await usuarioService.obterPerfil(
+        estaNoPerfilPessoal()
+          ? usuarioLogado.id
+          : idUsuario
+      );
+      return data;
+    } catch (error) {
+      alert(`Erro ao obter o perfil do usuário!`);
+    }
+  };
 
-    useEffect(() => {
-        async () => {
-        setUsuario({
-            nome: 'Gustavo Pina'
-        })};
-        console.log('chegou aqui')
-    }, [router.query.id]);
+  const estaNoPerfilPessoal = () => {
+    return router.query.id === 'eu';
+  };
 
-    return (
-    <header>
-       <div className='paginaPerfil'>
-            <CabecalhoPerfil 
-                usuarioLogado={usuarioLogado}
-                usuario={usuario}
-            /> 
-            <Feed usuarioLogado={usuarioLogado} />
-       </div>
-    </header>
-    );
+  useEffect(() => {
+    (async () => {
+      if (!router.query.id) {
+        return;
+      }
+
+      const dadosPerfil = await obterPerfil(router.query.id);
+      setUsuario(dadosPerfil);
+    })();
+  }, [router.query.id]);
+
+  return (
+    <div className='paginaPerfil'>
+      <CabecalhoPerfil
+        usuarioLogado={usuarioLogado}
+        usuario={usuario}
+        estaNoPerfilPessoal={estaNoPerfilPessoal()}
+      />
+
+      <Feed
+        usuarioLogado={usuarioLogado}
+        usuarioPerfil={usuario}
+      />
+    </div>
+  );
 }
 
-export default comAutorizacao(Perfil)
+export default comAutorizacao(Perfil);

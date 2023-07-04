@@ -1,5 +1,5 @@
 .paginaCadastro {
-    .uploadImagemcontainer {
+    .uploadImagemContainer {
         text-align: center;
         position: relative;
         margin-bottom: 48px;
@@ -21,15 +21,15 @@
             margin: auto;
         }
     }
+
     @media screen and (min-width: $desktopBreakpoint) {
         .rodapePaginaPublica {
             display: flex;
             justify-content: center;
+            
             p {
                 margin-right: 6px;
             }
         }
     }
-
-
 }

@@ -15,9 +15,9 @@
     }
 
     .conteudoPaginaPublica {
-       width: 100%; 
+        width: 100%;
     }
-
+    
     .btn {
         margin-top: 15px;
         padding: 10px;
@@ -27,12 +27,12 @@
         text-align: center;
         margin-top: 24px;
 
-        p{
+        p {
             color: $cinza3;
             margin: 0px 0px 2px;
         }
 
-        a{
+        a {
             color: $corPrimaria;
             font-family: $fontBold;
         }
@@ -44,8 +44,8 @@
         font-size: 18px;
         
         .logoContainer {
-            flex: 2;
             height: 30%;
+            flex: 2;
             margin-bottom: -30px;
 
             .logo {
@@ -68,7 +68,7 @@
         }
 
         .rodapePaginaPublica {
-            p,a {
+            p, a {
                 font-size: 18px;
             }
         }

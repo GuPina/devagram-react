@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoHorizontal from "../../public/imagens/logoHorizontal.svg";
+import logoHorizontal from "../../public/imagens/logoHorizontal.svg"
 import imagemLupa from "../../public/imagens/lupa.svg";
 import Navegacao from "./Navegacao";
 import { useState } from "react";
@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 
 const usuarioService = new UsuarioService();
 
-export default function Header() {
+export default function Cabecalho() {
     const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
     const [termoPesquisado, setTermoPesquisado] = useState('');
-    const router = useRouter()
+    const router = useRouter();
 
     let cabecalhoClassName = '';
     if (window && window.location.pathname !== '/') {
@@ -20,20 +20,18 @@ export default function Header() {
     }
 
     const aoPesquisar = async (e) => {
-      setTermoPesquisado(e.target.value);
-      setResultadoPesquisa([]);
-      
-       
-        if (termoPesquisado.length < 3) {
+        setTermoPesquisado(e.target.value);
+        setResultadoPesquisa([]);
+
+        if (e.target.value.length < 3) {
             return;
         }
 
         try {
-           const { data } = await usuarioService.pesquisar(termoPesquisado);
-           setResultadoPesquisa(data);
-        } catch (error) {
-            console.log('Erro ao pesquisar usuário:', error);
-            alert('Erro ao pesquisar usuario' + error?.response?.data?.erro);
+            const { data } = await usuarioService.pesquisar(termoPesquisado);
+            setResultadoPesquisa(data);
+        } catch (e) {
+            alert('Erro ao pesquisar usuario. ' + e?.response?.data?.erro);
         }
     }
 
@@ -41,7 +39,6 @@ export default function Header() {
         setResultadoPesquisa([]);
         setTermoPesquisado('');
         router.push(`/perfil/${id}`);
-
     }
 
     const redirecionarParaHome = () => {
@@ -49,11 +46,11 @@ export default function Header() {
     }
 
     return (
-        <header className={`cabecalhoPrincipal ${cabecalhoClassName}`} >
+        <header className={`cabecalhoPrincipal ${cabecalhoClassName}`}>
             <div className='conteudoCabecalhoPrincipal'>
                 <div className='logoCabecalhoPrincipal'>
                     <Image
-                        onClick={redirecionarParaHome} 
+                        onClick={redirecionarParaHome}
                         src={logoHorizontal}
                         alt='logo devagram'
                         layout='fill'
@@ -62,27 +59,28 @@ export default function Header() {
 
                 <div className='barraPesquisa'>
                     <div className='containerImagemLupa'>
-                        <Image 
+                        <Image
                             src={imagemLupa}
                             alt='Icone lupa'
                             layout='fill'
                         />
-                </div>
+                    </div>
 
-                <input
-                    type='text'
-                    placeholder='Pesquisar'
-                    value={termoPesquisado}
-                    onChange={aoPesquisar}
-                />   
+                    <input
+                        type='text'
+                        placeholder='Pesquisar'
+                        value={termoPesquisado}
+                        onChange={aoPesquisar}
+                    />
                 </div>
 
                 <Navegacao className='desktop' />
             </div>
+
             {resultadoPesquisa.length > 0 && (
                 <div className='resultadoPesquisaContainer'>
                     {resultadoPesquisa.map(r => (
-                        <ResultadoPesquisa 
+                        <ResultadoPesquisa
                             avatar={r.avatar}
                             nome={r.nome}
                             email={r.email}

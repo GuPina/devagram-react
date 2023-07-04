@@ -3,7 +3,7 @@ import Avatar from "../avatar";
 
 export function FazerComentario({ usuarioLogado, comentar }) {
     const [linhas, setLinhas] = useState(1);
-    const [comentario, setComentario] = useState ('');
+    const [comentario, setComentario] = useState('');
 
     const aoDigitarComentario = (e) => {
         const valorInput = e.target.value;
@@ -11,9 +11,9 @@ export function FazerComentario({ usuarioLogado, comentar }) {
         setLinhas(valorInput.length > 0 ? 2 : 1);
     }
 
-    const aoPrecionarQualquerTecla = (e) => {
-        if(e.key === 'Enter'){
-           fazerComentario();
+    const aoPressionarQualquerTecla = (e) => {
+        if (e.key === 'Enter') {
+            fazerComentario();
         }
     }
 
@@ -22,27 +22,28 @@ export function FazerComentario({ usuarioLogado, comentar }) {
             return;
         }
 
-       comentar(comentario);
+        comentar(comentario);
     }
 
     return (
-     <div className="containerFazerComentario">
-        <Avatar src={usuarioLogado.avatar} />
-        <textarea 
-        rows={linhas}
-        onChange={aoDigitarComentario}
-        onKeyDown={aoPrecionarQualquerTecla}
-        value={comentario}
-        placeholder="Adicione um comentario...">
-        </textarea>
+        <div className="containerFazerComentario">
+            <Avatar src={usuarioLogado.avatar} />
+            <textarea
+                rows={linhas}
+                onChange={aoDigitarComentario}
+                onKeyDown={aoPressionarQualquerTecla}
+                autoFocus={true}
+                value={comentario}
+                placeholder="Adicione um comentario...">
+            </textarea>
 
-        <button
-            type="button"
-            className="btnPublicacao desktop"
-            onClick={fazerComentario}
-        >
-            Publicar
-        </button>
-     </div>
+            <button
+                type="button"
+                className="btnPublicacao desktop"
+                onClick={fazerComentario}
+            >
+                Publicar
+            </button>
+        </div>
     )
 }

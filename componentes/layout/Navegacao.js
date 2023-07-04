@@ -11,23 +11,22 @@ import { useRouter } from "next/router";
 const mapaDeRotas = {
     home: {
         imagemAtivo: imgHomeAtivo,
-        rodasAtivacao: ['/'],
+        rotasAtivacao: ['/'],
         imagemPadrao: imgHomeCinza
     },
     publicacao: {
         imagemAtivo: imgPublicacaoAtivo,
-        rodasAtivacao: ['/publicacao'],
+        rotasAtivacao: ['/publicacao'],
         imagemPadrao: imgPublicacaoCinza
     },
     perfil: {
         imagemAtivo: imgUsuarioAtivo,
-        rodasAtivacao: ['/perfil/eu', '/perfil/eu/editar'],
+        rotasAtivacao: ['/perfil/eu', '/perfil/editar'],
         imagemPadrao: imgUsuarioCinza
     }
 }
 
-
-export default function Navegacao({className}) {
+export default function Navegacao({ className }) {
     const [rotaAtiva, setRotaAtiva] = useState('home');
     const router = useRouter();
 
@@ -38,14 +37,14 @@ export default function Navegacao({className}) {
     const definirRotaAtiva = () => {
         const chavesDoMapaDeRotas = Object.keys(mapaDeRotas);
         const indiceAtivo = chavesDoMapaDeRotas.findIndex(chave => {
-            return mapaDeRotas[chave].rodasAtivacao.includes(
+            return mapaDeRotas[chave].rotasAtivacao.includes(
                 window.location.pathname
             );
         });
 
-        if(indiceAtivo === -1 ) {
+        if (indiceAtivo === -1) {
             setRotaAtiva('home');
-        }else {
+        } else {
             setRotaAtiva(chavesDoMapaDeRotas[indiceAtivo]);
         }
     }
@@ -53,43 +52,43 @@ export default function Navegacao({className}) {
     const obterImagem = (nomeRota) => {
         const rotaAtivada = mapaDeRotas[nomeRota];
 
-        if(rotaAtiva === nomeRota) {
+        if (rotaAtiva === nomeRota) {
             return rotaAtivada.imagemAtivo;
         }
 
         return rotaAtivada.imagemPadrao;
     }
 
-    const aoClicarNoIcone = (nomeRota) =>{
+    const aoClicarNoIcone = (nomeRota) => {
         setRotaAtiva(nomeRota);
-        router.push(mapaDeRotas[nomeRota].rodasAtivacao[0])
-    } 
+        router.push(mapaDeRotas[nomeRota].rotasAtivacao[0])
+    }
 
     return (
         <nav className={`barraNavegacao ${className}`}>
             <ul>
                 <li onClick={() => aoClicarNoIcone('home')}>
-                    <Image 
+                    <Image
                         src={obterImagem('home')}
                         alt='icone home'
                         width={20}
                         height={20}
                     />
                 </li>
-                    
+
                 <li onClick={() => aoClicarNoIcone('publicacao')}>
-                    <Image 
+                    <Image
                         src={obterImagem('publicacao')}
                         alt='icone publicacao'
                         width={20}
                         height={20}
                     />
                 </li>
-               
+
                 <li onClick={() => aoClicarNoIcone('perfil')}>
-                    <Image 
+                    <Image
                         src={obterImagem('perfil')}
-                        alt='icone publicacao'
+                        alt='icone usuario'
                         width={20}
                         height={20}
                     />

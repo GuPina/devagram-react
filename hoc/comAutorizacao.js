@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import UsuarioService from "../services/UsuarioService"
-import Header from "../componentes/layout/Header";
+import Cabecalho from "../componentes/layout/Cabecalho";
 import Rodape from "../componentes/layout/Rodape";
+import Loading from "../componentes/loading";
+import UsuarioService from "../services/UsuarioService"
 
 const usuarioService = new UsuarioService();
 
@@ -11,7 +12,7 @@ export default function comAutorizacao(Componente) {
 
         if (typeof window !== 'undefined') {
             if (!usuarioService.estaAutenticado()) {
-                router.replace('/cadastro');
+                router.replace('/');
                 return null;
             }
 
@@ -19,15 +20,14 @@ export default function comAutorizacao(Componente) {
 
             return (
                 <>
-                    
-                    <Header usuarioLogado={usuarioLogado} />
+                    <Cabecalho usuarioLogado={usuarioLogado} />
+                    <Loading />
                     <Componente usuarioLogado={usuarioLogado} {...props} />
                     <Rodape usuarioLogado={usuarioLogado} />
                 </>
-            ) 
+            );
         }
 
         return null;
-
     }
 }

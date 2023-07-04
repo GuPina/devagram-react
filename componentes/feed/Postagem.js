@@ -12,7 +12,6 @@ import FeedService from "../../services/FeedService";
 const tamanhoLimiteDescricao = 90;
 const feedService = new FeedService();
 
-
 export default function Postagem({
     id,
     usuario,
@@ -24,13 +23,13 @@ export default function Postagem({
 }) {
     const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
     const [comentariosPostagem, setComentariosPostagem] = useState(comentarios);
-    const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false)
+    const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false);
     const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(
         tamanhoLimiteDescricao
     );
 
     const exibirDescricaoCompleta = () => {
-        setTamanhoAtualDaDescricao(Number.MAX_SAFE_INTEGER)
+        setTamanhoAtualDaDescricao(Number.MAX_SAFE_INTEGER);
     }
 
     const descricaoMaiorQueLimite = () => {
@@ -53,8 +52,7 @@ export default function Postagem({
     }
 
     const comentar = async (comentario) => {
-        
-        try{
+        try {
             await feedService.adicionarComentario(id, comentario);
             setDeveExibirSecaoParaComentar(false);
             setComentariosPostagem([
@@ -64,8 +62,8 @@ export default function Postagem({
                     mensagem: comentario
                 }
             ]);
-        }catch (e) {
-            alert(`Erro ao fazer comentario!` + (e?.response?.data?.erro || ''));
+        } catch (e) {
+            alert(`Erro ao fazer comentario! ` + (e?.response?.data?.erro || ''));
         }
     }
 
@@ -74,48 +72,47 @@ export default function Postagem({
     }
 
     const alterarCurtida = async () => {
-        try{
+        try {
             await feedService.alterarCurtida(id);
-            const estaCurtido = curtidasPostagem.includes(usuarioLogado.id);
-            if(usuarioLogadoCurtiuPostagem()) {
+            if (usuarioLogadoCurtiuPostagem()) {
                 // tiro o usuario logado da lista de curtidas
                 setCurtidasPostagem(
                     curtidasPostagem.filter(idUsuarioQueCurtiu => idUsuarioQueCurtiu !== usuarioLogado.id)
                 );
             } else {
-                //adiciona o usuario logado na lista de curtidas
+                // adiciona o usuario logado na lista de curtidas
                 setCurtidasPostagem([
                     ...curtidasPostagem,
                     usuarioLogado.id
-                ])
+                ]);
             }
-        }catch (e) {
-            alert(`Erro ao ao alterar a curtida` + (e?.response?.data?.erro || ''));
+        } catch (e) {
+            alert(`Erro ao alterar a curtida! ` + (e?.response?.data?.erro || ''));
         }
     }
 
     const obterImagemCurtida = () => {
         return usuarioLogadoCurtiuPostagem()
             ? imgCurtido
-            : imgCurtir
+            : imgCurtir;
     }
 
-    return(
+    return (
         <div className="postagem">
-            <Link href={`/perfil/${usuario.id}`} >
+            <Link href={`/perfil/${usuario.id}`}>
                 <section className="cabecalhoPostagem">
-                    <Avatar src={usuario.avatar}/>
+                    <Avatar src={usuario.avatar} />
                     <strong>{usuario.nome}</strong>
-
                 </section>
             </Link>
+
             <div className="fotoDaPostagem">
-                <img src={fotoDoPost} alt={'foto da postagem'} />
+                <img src={fotoDoPost} alt='foto da postagem' />
             </div>
 
             <div className="rodapeDaPostagem">
                 <div className="acoesDaPostagem">
-                    <Image 
+                    <Image
                         src={obterImagemCurtida()}
                         alt='icone curtir'
                         width={20}
@@ -131,18 +128,18 @@ export default function Postagem({
                         onClick={() => setDeveExibirSecaoParaComentar(!deveExibirSecaoParaComentar)}
                     />
 
-
                     <span className="quantidadeCurtidas">
-                        Curtido por <strong>{curtidasPostagem.length}</strong>
+                        Curtido por <strong> {curtidasPostagem.length} pessoas</strong>
                     </span>
                 </div>
+
                 <div className="descricaoDaPostagem">
                     <strong className="nomeUsuario">{usuario.nome}</strong>
                     <p className="descricao">
                         {obterDescricao()}
                         {descricaoMaiorQueLimite() && (
                             <span
-                                onClick={exibirDescricaoCompleta} 
+                                onClick={exibirDescricaoCompleta}
                                 className="exibirDescricaoCompleta">
                                 mais
                             </span>
@@ -155,13 +152,14 @@ export default function Postagem({
                         <div className="comentario" key={i}>
                             <strong className="nomeUsuario">{comentario.nome}</strong>
                             <p className="descricao">{comentario.mensagem}</p>
-                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
+
             {deveExibirSecaoParaComentar &&
-                    <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado} />
-                }
+                <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado} />
+            }
         </div>
-    )
+    );
 }
