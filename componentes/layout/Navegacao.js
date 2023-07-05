@@ -37,17 +37,15 @@ export default function Navegacao({ className }) {
     const definirRotaAtiva = () => {
         const chavesDoMapaDeRotas = Object.keys(mapaDeRotas);
         const indiceAtivo = chavesDoMapaDeRotas.findIndex(chave => {
-            return mapaDeRotas[chave].rotasAtivacao.includes(
-                window.location.pathname
-            );
+            return mapaDeRotas[chave].rotasAtivacao.includes(router.asPath);
         });
-
+    
         if (indiceAtivo === -1) {
             setRotaAtiva('home');
         } else {
             setRotaAtiva(chavesDoMapaDeRotas[indiceAtivo]);
         }
-    }
+    }    
 
     const obterImagem = (nomeRota) => {
         const rotaAtivada = mapaDeRotas[nomeRota];

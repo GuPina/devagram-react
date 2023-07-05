@@ -2,6 +2,7 @@
     display: flex;
     padding-left: 20px;
     padding-right: 20px;
+    align-items: center;
 
     h3 {
         font-family: $fontBold;
@@ -15,6 +16,10 @@
         color: $cinza3;
         display: flex;
         align-items: center;
+        cursor: pointer;
+    }
+
+    .setaEsquerda {
         cursor: pointer;
     }
 
