@@ -6,16 +6,16 @@ export default class UsuarioService extends HttpService {
         
         console.log('Token:', data.token);
 
-        localStorage.setItem("nome", data.nome);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("usuario.nome", data.nome);
+        localStorage.setItem("usuario.email", data.email);
+        localStorage.setItem("usuario.token", data.token);
 
         const usuario = await this.get('/usuario');
 
-        localStorage.setItem('id', usuario.data._id);
+        localStorage.setItem('usuario.id', usuario.data._id);
 
         if (usuario.data.avatar) {
-            localStorage.setItem("avatar", usuario.data.avatar);
+            localStorage.setItem("usuario.avatar", usuario.data.avatar);
         }
     }
 
@@ -24,36 +24,43 @@ export default class UsuarioService extends HttpService {
     }
 
     estaAutenticado() {
-        return localStorage.getItem('token') !== null;
+        return localStorage.getItem('usuario.token') !== null;
     }
 
     async pesquisar(termoDaPesquisa) {
         return this.get('/pesquisa?filtro=' + termoDaPesquisa)
     }
 
-    async obterPerfil (idUsuario) {
-        return this.get(`/pesquisa?id=${idUsuario}`);
+    async obterPerfil() {
+        const idUsuario = localStorage.getItem('usuario.id');
+        return this.get(`/usuario?id=${idUsuario}`);
+    }    
+
+    async alternarSeguir(idUsuario) {
+        return this.put(`/usuario/seguir?id=${idUsuario}`);
+    }
+    
+    async atualizarPerfil(dadosPerfil) {
+        const idUsuario = localStorage.getItem('usuario.id');
+        return await this.put(`/usuario/${idUsuario}`, dadosPerfil);
     }
 
-    async alternarSeguir( idUsuario) {
-        return this.put(`/seguir?id=${idUsuario}`);
+    async logout() {
+        localStorage.removeItem("usuario.nome");
+        localStorage.removeItem("usuario.email");
+        localStorage.removeItem("usuario.token");
+        localStorage.removeItem("usuario.avatar");
+        localStorage.removeItem("usuario.id");
     }
 
-    async logout () {
-        localStorage.removeItem("nome");
-        localStorage.removeItem("email");
-        localStorage.removeItem("token");
-        localStorage.removeItem("avatar");
-        localStorage.removeItem("id");
-    }
-
+    
 
     obterInformacoesDoUsuarioLogado() {
         return {
-            id: localStorage.getItem('id'),
-            nome: localStorage.getItem('nome'),
-            email: localStorage.getItem('email'),
-            avatar: localStorage.getItem('avatar')
-        }
+            id: localStorage.getItem('usuario.id'),
+            nome: localStorage.getItem('usuario.nome'),
+            email: localStorage.getItem('usuario.email'),
+            avatar: localStorage.getItem('usuario.avatar')
+        };
     }
 }
