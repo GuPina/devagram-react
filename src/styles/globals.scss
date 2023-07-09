@@ -1,4 +1,4 @@
-@import 'variaveis.scss';
+@import "variaveis.scss";
 
 * {
   font-family: $fontRegular;
@@ -6,7 +6,9 @@
   text-decoration: none;
 }
 
-html, body, #__next {
+html,
+body,
+#__next {
   height: 100%;
   margin: 0;
 }
@@ -82,7 +84,7 @@ strong {
 body {
   @media screen and (min-width: $desktopBreakpoint) {
     background-color: $cinza5;
-    background-image: url('/imagens/imagemDefundoDesktop.svg') ;
+    background-image: url("/imagens/imagemDefundoDesktop.svg");
   }
 }
 
@@ -90,19 +92,18 @@ body {
   @media screen and (min-width: $desktopBreakpoint) {
     width: 30%;
     margin: auto;
-
   }
 }
 
-@import '../../public/Fontes/fontes.scss';
-@import '../../componentes/botao/botao.scss';
-@import '../styles/paginaPublica.scss';
-@import '../../componentes/inputPublico/inputPublico.scss';
-@import '../pages/cadastro/cadastro.scss';
-@import '../../componentes/layout/cabecalho.scss';
-@import '../../componentes/layout/rodape.scss';
-@import '../../componentes/feed/feed.scss';
-@import '../../componentes/cabecalhoComAcoes/cabecalhoComAcoes.scss';
-@import '../pages/perfil/perfil.scss';
-@import '../../src/pages/publicacao/publicacao.scss';
-@import '../../componentes/loading/loading.scss';
+@import "../../public/Fontes/fontes.scss";
+@import "../../componentes/botao/botao.scss";
+@import "../styles/paginaPublica.scss";
+@import "../../componentes/inputPublico/inputPublico.scss";
+@import "../pages/cadastro/cadastro.scss";
+@import "../../componentes/layout/cabecalho.scss";
+@import "../../componentes/layout/rodape.scss";
+@import "../../componentes/feed/feed.scss";
+@import "../../componentes/cabecalhoComAcoes/cabecalhoComAcoes.scss";
+@import "../pages/perfil/perfil.scss";
+@import "../../src/pages/publicacao/publicacao.scss";
+@import "../../componentes/loading/loading.scss";
