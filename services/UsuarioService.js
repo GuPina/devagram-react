@@ -40,7 +40,7 @@ export default class UsuarioService extends HttpService {
         return this.put(`/usuario/seguir?id=${idUsuario}`);
     }
     
-    async atualizarPerfil(dadosPerfil) {
+    async editarPerfil(dadosPerfil) {
         const idUsuario = localStorage.getItem('usuario.id');
         return await this.put(`/usuario/${idUsuario}`, dadosPerfil);
     }
